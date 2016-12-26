@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration>
+	<Properties>
+		<Property name="LOG_DIR">${sys:catalina.home}/logs/webapp.log
+		</Property>
+		<Property name="ARCHIVE">${sys:catalina.home}/logs/Archive/app-%d{MM-dd-yyyy}-%i.log
+		</Property>
+		<Property name="PATTERN">%d{ddMMM HH:mm} %-5p[%c] %m%n</Property>
+		<!-- <Property name="PATTERN">%d %-5p [%c] %m%n</Property> -->
+	</Properties>
+
+	<Appenders>
+		<RollingFile name="RollingFile" fileName="${LOG_DIR}"
+			filePattern="${ARCHIVE}" append="true">
+			<PatternLayout pattern="${PATTERN}" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="7" />
+		</RollingFile>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${PATTERN}" />
+		</Console>
+	</Appenders>
+
+	<Loggers>
+		<Root level="DEBUG">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="RollingFile" />
+		</Root>
+		<Logger name="org.springframework" level="INFO" />
+	</Loggers>
+</Configuration>
